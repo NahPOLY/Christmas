@@ -1,0 +1,392 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(https://marketplace.canva.com/EAGQmrnCqbE/2/0/1600w/canva-green-christmas-zoom-virtual-background-yK5aaGtg5ag.jpg);
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(2px); /* เบลอแค่ภาพพื้นหลัง */
+    z-index: -1; /* ให้ภาพพื้นหลังอยู่ด้านหลัง */
+}
+
+/* สไตล์สำหรับเนื้อหาหลัก */
+.gift-container {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    perspective: 1500px;
+    cursor: pointer;
+    z-index: 1;
+}
+
+.gift {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 1s ease-in-out;
+    transform: rotateX(0deg);
+    z-index: 2;
+}
+
+.gift.open .lid {
+    transform: rotateX(-120deg);
+}
+
+.gift.open .message {
+    animation: slide-out 1.2s forwards 0.5s;
+}
+
+.lid, .box {
+    position: absolute;
+    width: 100%;
+    height: 50%;
+    background: linear-gradient(135deg, #FFD700, #FF6347);
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
+    transition: box-shadow 0.3s ease-in-out, transform 0.5s ease-in-out;
+}
+
+.lid {
+    top: 0;
+    transform-origin: bottom;
+    z-index: 3;
+}
+
+.box {
+    bottom: 0;
+    z-index: 2;
+}
+
+.lid:hover, .box:hover {
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.8);
+    transform: scale(1.05);
+}
+
+.ribbon {
+    position: absolute;
+    width: 40px;
+    height: 100%;
+    background: #E63946;
+    left: 50%;
+    top: 0;
+    transform: translateX(-50%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.ribbon-horizontal {
+    position: absolute;
+    width: 100%;
+    height: 40px;
+    background: #E63946;
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    z-index: 2;
+}
+
+.message {
+    position: absolute;
+    bottom: 50%;
+    left: 50%;
+    transform: translateX(-50%) translateY(100%);
+    width: 90%;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    cursor: pointer;
+    z-index: 2;
+}
+
+.message h2 {
+    font-size: 22px;
+    color: #FF6347;
+    margin: 0;
+    text-shadow: 1px 1px 3px #000;
+}
+
+.message p {
+    font-size: 18px;
+    color: #333;
+    margin: 10px 0;
+    line-height: 1.5;
+}
+
+@keyframes slide-out {
+    0% {
+        transform: translateX(-50%) translateY(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(-50%) translateY(-10%);
+        opacity: 1;
+    }
+}
+
+
+/* หิมะตกจากข้างบนลงมา */
+@keyframes fall {
+    0% {
+        top: -50px;
+    }
+    100% {
+        top: 100%;
+    }
+}
+
+/* หิมะหมุนระหว่างตก */
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+/* สร้างการแกว่งของหิมะ */
+@keyframes sway {
+    0% {
+        transform: translateX(0);
+    }
+    50% {
+        transform: translateX(-20px);
+    }
+    100% {
+        transform: translateX(20px);
+    }
+}
+
+/* เพิ่มการกระจายตำแหน่งและเวลาของหิมะ */
+.snowflake {
+    position: absolute;
+    opacity: 0.8;
+    font-size: 20px;
+    color: white;
+    z-index: 1; /* ตั้งค่า z-index สำหรับหิมะให้ต่ำกว่า */
+    animation: fall 10s linear infinite, spin 6s linear infinite, sway 2s ease-in-out infinite;
+    transform-origin: center;
+    left: calc(100% * var(--random-x));
+    animation-duration: calc(10s + (var(--random-duration) * 3s));
+    animation-timing-function: ease-in;
+}
+
+/* เพิ่ม z-index สูงให้กับกล่องข้อความและภาพ */
+.gift-container,
+.expanded-message {
+    z-index: 10; /* ให้มันแสดงอยู่เหนือหิมะ */
+}
+
+/* ถ้าต้องการให้กล่องข้อความหรือกล่องอื่นๆ ที่สำคัญไม่ถูกหิมะทับ */
+.message, .expanded-message {
+    z-index: 20; /* ปรับให้กล่องข้อความอยู่เหนือหิมะ */
+}
+
+.snowflake:nth-child(1) {
+    --random-x: 0.1;
+    --random-duration: 2;
+font-size: 15px;
+}
+.snowflake:nth-child(2) {
+    --random-x: 0.3;
+    --random-duration: 3;
+font-size: 18px;
+}
+.snowflake:nth-child(3) {
+    --random-x: 0.5;
+    --random-duration: 2.5;
+font-size: 22px;
+}
+.snowflake:nth-child(4) {
+    --random-x: 0.7;
+    --random-duration: 1.8;
+font-size: 16px;
+}
+.snowflake:nth-child(5) {
+    --random-x: 0.9;
+    --random-duration: 3.2;
+font-size: 20px;
+}
+.snowflake:nth-child(6) {
+    --random-x: 0.2;
+    --random-duration: 2.8;
+font-size: 19px;
+}
+.snowflake:nth-child(7) {
+    --random-x: 0.4;
+    --random-duration: 1.5;
+font-size: 14px;
+}
+.snowflake:nth-child(8) {
+    --random-x: 0.6;
+    --random-duration: 3.5;
+font-size: 21px;
+}
+.snowflake:nth-child(9) {
+    --random-x: 0.8;
+    --random-duration: 2;
+font-size: 17px;
+}
+.snowflake:nth-child(10) {
+    --random-x: 0.95;
+    --random-duration: 2.1;
+font-size: 22px;
+}
+.snowflake:nth-child(11) {
+    --random-x: 0.1;
+    --random-duration: 2;
+    font-size: 16px;
+}
+.snowflake:nth-child(12) {
+    --random-x: 0.2;
+    --random-duration: 2.5;
+    font-size: 22px;
+}
+.snowflake:nth-child(13) {
+    --random-x: 0.3;
+    --random-duration: 2.8;
+    font-size: 18px;
+}
+.snowflake:nth-child(14) {
+    --random-x: 0.4;
+    --random-duration: 1.9;
+    font-size: 19px;
+}
+.snowflake:nth-child(15) {
+    --random-x: 0.5;
+    --random-duration: 2.4;
+    font-size: 20px;
+}
+.snowflake:nth-child(16) {
+    --random-x: 0.6;
+    --random-duration: 2.1;
+    font-size: 17px;
+}
+.snowflake:nth-child(17) {
+    --random-x: 0.7;
+    --random-duration: 3;
+    font-size: 21px;
+}
+.snowflake:nth-child(18) {
+    --random-x: 0.8;
+    --random-duration: 2.3;
+    font-size: 15px;
+}
+.snowflake:nth-child(19) {
+    --random-x: 0.9;
+    --random-duration: 2.6;
+    font-size: 22px;
+}
+.snowflake:nth-child(20) {
+    --random-x: 0.95;
+    --random-duration: 2.9;
+    font-size: 14px;
+}
+
+.expanded-message {
+    display: none;
+    position: fixed;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 40px;
+    border-radius: 15px; /* เพิ่มความโค้งของมุม */
+    width: 80%;
+    max-width: 600px; /* ขยายขนาด */
+    text-align: center;
+    z-index: 10;
+    overflow: hidden;
+    opacity: 0;
+    transition: opacity 1s ease, transform 0.5s ease-in-out; /* เพิ่มเอฟเฟกต์การขยาย */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8); /* เพิ่มเงา */
+}
+
+.expanded-message.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(-50%) scale(1.05); /* ขยายกล่องเมื่อแสดง */
+}
+
+/* เอฟเฟกต์ปิดกล่อง */
+.expanded-message img {
+    width: auto;  /* รักษาขนาดของรูปภาพ */
+    height: auto; /* รักษาสัดส่วนของรูปภาพ */
+    max-width: 100%;  /* ไม่ให้เกินขนาด container */
+    max-height: 90vh;  /* ขนาดสูงสุด 90% ของหน้าจอ */
+    animation: zoomIn 0.5s ease-out; 
+}
+
+/* ปุ่มปิดให้มีเอฟเฟกต์เมื่อเลื่อนเมาส์ */
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: transparent;
+    border: none;
+    font-size: 30px;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.close-btn:hover {
+    transform: scale(1.2); /* ขยายปุ่มปิดเมื่อเลื่อนเมาส์ */
+}
+
+/* การเพิ่มเอฟเฟกต์การซูม */
+@keyframes zoomIn {
+    0% {
+        transform: scale(0.9);
+        opacity: 0;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* แซนต้าลอยผ่าน */
+.santa {
+    position: absolute;
+    top: 5%;
+    left: -200px; /* เริ่มจากซ้าย */
+    animation: flyAcross 10s linear infinite;
+}
+
+.santa img {
+    width: 150px; /* ขนาดของแซนต้า */
+}
+
+/* การเคลื่อนที่ของแซนต้า */
+@keyframes flyAcross {
+    0% {
+        left: -200px; /* เริ่มจากซ้าย */
+    }
+    100% {
+        left: 100%; /* เคลื่อนที่ไปทางขวา */
+    }
+}

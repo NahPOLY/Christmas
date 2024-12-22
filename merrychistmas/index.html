@@ -3,283 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>กล่องของขวัญวันคริสต์มาส</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: 'Arial', sans-serif;
-            background-image: url(https://marketplace.canva.com/EAGQmrnCqbE/2/0/1600w/canva-green-christmas-zoom-virtual-background-yK5aaGtg5ag.jpg);
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            overflow: hidden;
-            position: relative;
-        }
-
-        .gift-container {
-            position: relative;
-            width: 300px;
-            height: 300px;
-            perspective: 1500px;
-            cursor: pointer;
-        }
-
-        .gift {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            transform-style: preserve-3d;
-            transition: transform 1s ease-in-out;
-            transform: rotateX(0deg);
-        }
-
-        .gift.open .lid {
-            transform: rotateX(-120deg);
-        }
-
-        .gift.open .message {
-            animation: slide-out 1.2s forwards 0.5s;
-        }
-
-        .lid, .box {
-            position: absolute;
-            width: 100%;
-            height: 50%;
-            background: linear-gradient(135deg, #FFD700, #FF6347);
-            border-radius: 10px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.7);
-            transition: box-shadow 0.3s ease-in-out, transform 0.5s ease-in-out;
-        }
-
-        .lid {
-            top: 0;
-            transform-origin: bottom;
-            z-index: 2;
-        }
-
-        .box {
-            bottom: 0;
-        }
-
-        .lid:hover, .box:hover {
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.8);
-            transform: scale(1.05);
-        }
-
-        .ribbon {
-            position: absolute;
-            width: 40px;
-            height: 100%;
-            background: #E63946;
-            left: 50%;
-            top: 0;
-            transform: translateX(-50%);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .ribbon-horizontal {
-            position: absolute;
-            width: 100%;
-            height: 40px;
-            background: #E63946;
-            top: 50%;
-            left: 0;
-            transform: translateY(-50%);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .message {
-            position: absolute;
-            bottom: 50%;
-            left: 50%;
-            transform: translateX(-50%) translateY(100%);
-            width: 90%;
-            padding: 20px;
-            background: rgba(255, 255, 255, 0.8);
-            border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
-            text-align: center;
-            opacity: 0;
-            transition: opacity 0.5s ease-in-out;
-            cursor: pointer;
-        }
-
-        .message h2 {
-            font-size: 22px;
-            color: #FF6347;
-            margin: 0;
-            text-shadow: 1px 1px 3px #000;
-        }
-
-        .message p {
-            font-size: 18px;
-            color: #333;
-            margin: 10px 0;
-            line-height: 1.5;
-        }
-
-        @keyframes slide-out {
-            0% {
-                transform: translateX(-50%) translateY(100%);
-                opacity: 0;
-            }
-            100% {
-                transform: translateX(-50%) translateY(-10%);
-                opacity: 1;
-            }
-        }
-
-        /* ใช้รูปหิมะแทนตัวอักษร */
-        .snowflake {
-    position: absolute;
-    opacity: 0.8;
-    font-size: 20px;
-    color: white;
-    z-index: 9999;
-    animation: fall 10s linear infinite, spin 6s linear infinite, sway 2s ease-in-out infinite;
-    transform-origin: center;
-    left: calc(100% * var(--random-x));
-    animation-duration: calc(10s + (var(--random-duration) * 3s));
-    animation-timing-function: ease-in;
-}
-
-/* หิมะตกจากข้างบนลงมา */
-@keyframes fall {
-    0% {
-        top: -50px;
-    }
-    100% {
-        top: 100%;
-    }
-}
-
-/* หิมะหมุนระหว่างตก */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-/* สร้างการแกว่งของหิมะ */
-@keyframes sway {
-    0% {
-        transform: translateX(0);
-    }
-    50% {
-        transform: translateX(-20px);
-    }
-    100% {
-        transform: translateX(20px);
-    }
-}
-
-/* เพิ่มการกระจายตำแหน่งและเวลาของหิมะ */
-.snowflake:nth-child(1) {
-    --random-x: 0.1;
-    --random-duration: 2;
-    font-size: 15px;
-}
-.snowflake:nth-child(2) {
-    --random-x: 0.3;
-    --random-duration: 3;
-    font-size: 18px;
-}
-.snowflake:nth-child(3) {
-    --random-x: 0.5;
-    --random-duration: 2.5;
-    font-size: 22px;
-}
-.snowflake:nth-child(4) {
-    --random-x: 0.7;
-    --random-duration: 1.8;
-    font-size: 16px;
-}
-.snowflake:nth-child(5) {
-    --random-x: 0.9;
-    --random-duration: 3.2;
-    font-size: 20px;
-}
-.snowflake:nth-child(6) {
-    --random-x: 0.2;
-    --random-duration: 2.8;
-    font-size: 19px;
-}
-.snowflake:nth-child(7) {
-    --random-x: 0.4;
-    --random-duration: 1.5;
-    font-size: 14px;
-}
-.snowflake:nth-child(8) {
-    --random-x: 0.6;
-    --random-duration: 3.5;
-    font-size: 21px;
-}
-.snowflake:nth-child(9) {
-    --random-x: 0.8;
-    --random-duration: 2;
-    font-size: 17px;
-}
-.snowflake:nth-child(10) {
-    --random-x: 0.95;
-    --random-duration: 2.1;
-    font-size: 22px;
-}
-
-        /* รูปภาพที่ขยาย */
-        .expanded-message {
-            display: none;
-            position: fixed;
-            top: 10%;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: rgba(0, 0, 0, 0.7);
-            color: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 80%;
-            max-width: 500px;
-            text-align: center;
-            z-index: 10;
-            overflow: hidden;
-            opacity: 0;
-            transition: opacity 1s ease;
-        }
-
-        .expanded-message.active {
-            display: block;
-            opacity: 1;
-        }
-
-        .expanded-message img {
-            width: 100%;
-            height: auto;
-            border-radius: 10px;
-            margin-bottom: 20px;
-        }
-
-        .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: transparent;
-            border: none;
-            font-size: 30px;
-            color: white;
-            cursor: pointer;
-        }
-    </style>
+    <title>Merry Christmas</title>
+    <link rel="icon" href="https://img.freepik.com/premium-vector/merry-christmas-illustration-typography-design-christmas-vector-symbol-emblem_1249867-6017.jpg?semt=ais_hybrid" type="image/x-icon">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
+<div class="santa">
+    <img src="https://www.pngarts.com/files/3/Santa-PNG-Image-with-Transparent-Background.png" alt="Santa">
+</div>
 <!-- หิมะตก -->
 <div class="snow">
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
+    <div class="snowflake">❄️</div>
     <div class="snowflake">❄️</div>
     <div class="snowflake">❄️</div>
     <div class="snowflake">❄️</div>
@@ -303,7 +47,7 @@
         <div class="message" onclick="showImage()">
             <h2>🎄สุขสันต์วันคริสต์มาส!🎄</h2>
             <p>ขอให้พ่อและแม่มีความสุขมาก ๆ</p>
-            <p>สุขภาพแข็งแรง และมีแต่ความสุขในทุกวัน 🎄</p>
+            <p>สุขภาพแข็งแรง ร่ำรวยๆ 💸</p>
         </div>
     </div>
 </div>
@@ -311,45 +55,7 @@
 <!-- ขยายแสดงรูปภาพ -->
 <div class="expanded-message" id="expandedMessage">
     <button class="close-btn" onclick="closeImage()">×</button>
-    <img src="https://img.freepik.com/premium-vector/merry-christmas-typography-with-santa-hat-holiday-celebration_1278010-1154.jpg" alt="รูปภาพที่ขยาย">
+    <img src="https://img.freepik.com/premium-vector/merry-christmas-typography-with-santa-hat-holiday-celebration_1278010-1154.jpg" alt="รูปภาพ">
 </div>
-
-<script>
-    const images = [
-        'https://www.yourtango.com/sites/default/files/image_blog/habits-of-truly-nice-people.png',
-        'https://assets.weforum.org/article/image/XaHpf_z51huQS_JPHs-jkPhBp0dLlxFJwt-sPLpGJB0.jpg',
-        'https://static.vecteezy.com/system/resources/previews/027/875/966/non_2x/large-mixed-group-of-multicultural-people-international-students-or-friends-diversity-concept-ai-generative-photo.jpg'
-    ];
-    let currentImageIndex = 0;
-
-    function toggleGift() {
-        const gift = document.getElementById('gift');
-        gift.classList.toggle('open');
-    }
-
-    function showImage() {
-        const expandedMessage = document.getElementById('expandedMessage');
-        expandedMessage.classList.add('active');
-        startImageRotation();
-    }
-
-    function closeImage() {
-        const expandedMessage = document.getElementById('expandedMessage');
-        expandedMessage.classList.remove('active');
-    }
-
-    function changeImage(imageUrl) {
-        const image = document.querySelector('#expandedMessage img');
-        image.src = imageUrl;
-    }
-
-    function startImageRotation() {
-        setInterval(() => {
-            currentImageIndex = (currentImageIndex + 1) % images.length;
-            changeImage(images[currentImageIndex]);
-        }, 5000); // เปลี่ยนทุกๆ 5 วินาที
-    }
-</script>
-
 </body>
 </html>
